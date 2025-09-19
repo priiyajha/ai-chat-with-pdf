@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { OpenAIEmbeddings } from "@langchain/openai";
@@ -11,16 +11,16 @@ import pineconeClient from "./pinecone";
 import { PineconeStore } from "@langchain/pinecone";
 import { PineconeConflictError } from "@pinecone-database/pinecone/dist/errors";
 import { Index, RecordMetadata } from "@pinecone-database/pinecone";
-import { adminDb } from "../firebaseAdmin";
+import { adminDb } from "@/firebaseAdmin";
 import { auth } from "@clerk/nextjs/server";
 
 
-const model = new ChatOpenAI(
-    {
-        apiKey: process.env.OPENAI_API_KEY,
-        modelName: "gpt-4o",
-    }
-);
+const model = new ChatGoogleGenerativeAI({
+    model: "gemini-pro",
+    apiKey: "GEMINI_API_KEY",
+});
+
+
 
 export const indexName = "ai-chat-with-pdf";
 
@@ -82,7 +82,10 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
 
     let pineconeVectorStore;
     console.log("---Generating embeddings...---");
-    const embeddings = new OpenAIEmbeddings();
+    const embeddings = new GoogleGenerativeAIEmbeddings({
+        model: "embedding-001",
+        apiKey: "GEMINI_API_KEY",
+    });
 
     const index = await pineconeClient.index(indexName);
     const namespaceAlreadyExists = await namespaceExists(index,docId);
@@ -97,8 +100,14 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
     return pineconeVectorStore;}
     else {
         const splitDocs = await generateDocs(docId);
-
+        console.log("Split Docs:", splitDocs);
         console.log(`storing the embeddings in namespace ${docId} in the ${indexName} in the vector store`);
+
+
+
+        const testText = "This is a test sentence.";
+        const testEmbedding = await embeddings.embedDocuments([testText]);
+        console.log("Test Embedding:", testEmbedding);
 
         pineconeVectorStore = await PineconeStore.fromDocuments(
             splitDocs,
