@@ -69,6 +69,7 @@ const FileUploader = () => {
 
     // @ts-ignore
     // @ts-ignore
+    // @ts-ignore
     return (
         <div className="mt-32 flex flex-col gap-4 items-center max-w-7xl mx-auto ">
 
@@ -93,7 +94,7 @@ const FileUploader = () => {
                     <p className="text-indigo-600 animate-pulse">{status}</p>
                 </div>
             )}
-        <div {...getRootProps()}
+        {!uploadInProgress && ( <div {...getRootProps()}
         className={`p-10 border-2 border-dashed mt-10 w-[90%] border-indigo-600 text-indigo-600
          rounded-lg h-96 flex items-center justify-center 
          ${isFocused||isDragAccept ? "bg-indigo-300":"bg-indigo-100"}`}
@@ -115,8 +116,8 @@ const FileUploader = () => {
             )}
 
         </div>
-        </div>
-            </div>
+        </div>) }
+    </div>
     )
 }
 export default FileUploader
