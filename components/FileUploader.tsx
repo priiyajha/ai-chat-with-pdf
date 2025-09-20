@@ -70,6 +70,8 @@ const FileUploader = () => {
     // @ts-ignore
     // @ts-ignore
     // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
     return (
         <div className="mt-32 flex flex-col gap-4 items-center max-w-7xl mx-auto ">
 

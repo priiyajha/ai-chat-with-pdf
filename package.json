@@ -17,6 +17,7 @@
     "@langchain/pinecone": "^0.2.0",
     "@pinecone-database/pinecone": "^6.1.2",
     "@radix-ui/react-slot": "^1.2.3",
+    "@react-pdf/renderer": "^4.3.0",
     "@tailwindcss/vite": "^4.1.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -29,6 +30,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",
+    "react-pdf": "^10.1.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^13.0.0"
