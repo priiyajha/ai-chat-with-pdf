@@ -119,7 +119,10 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
 
         return pineconeVectorStore;
     }
+}
 
-
+const generateLangchainCompletion = async (docId:string ,question:string)=>{
+    let pineconeVectorStore;
+    pineconeVectorStore = await generateEmbeddingsInPineconeVectorStore(docId);
 
 }

@@ -3,8 +3,12 @@ import PdfView from "@/components/PdfView";
 import { adminDb } from "@/firebaseAdmin";
 import { auth } from "@clerk/nextjs/server";
 
+function Chat(props: { id: string }) {
+    return null;
+}
+
 async function ChatToFilePage({
-                                  params: { id },
+                                  params:{id}
                               }: {
     params: {
         id: string;
@@ -23,14 +27,15 @@ async function ChatToFilePage({
     const url = ref.data()?.downloadUrl;
 
     return (
-        <div className="grid lg:grid-cols-4 h-full overflow-hidden">
+        <div className="flex flex-row h-full overflow-hidden">
             {/* Right */}
-            <div className=" lg:col-span-1 overflow-y-auto">
+            <div className="w-1/2 overflow-y-auto">
                 {/* Chat */}
+                <Chat id={id}/>
             </div>
 
             {/* Left */}
-            <div className="col-span-4 lg:col-span-3 bg-gray-100 border-2 border-indigo-600 lg:-order-1 overflow-y-auto">
+            <div className="w-1/2 bg-gray-100 border-2 border-indigo-600 overflow-y-auto">
                 {/* PDFView */}
                 <PdfView url={url} />
             </div>
