@@ -17,7 +17,7 @@ import { auth } from "@clerk/nextjs/server";
 
 const model = new ChatGoogleGenerativeAI({
     model: "gemini-pro",
-    apiKey: "GEMINI_API_KEY",
+    apiKey: process.env.GEMINI_API_KEY,
 });
 
 
@@ -84,7 +84,7 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
     console.log("---Generating embeddings...---");
     const embeddings = new GoogleGenerativeAIEmbeddings({
         model: "embedding-001",
-        apiKey: "GEMINI_API_KEY",
+        apiKey: process.env.GEMINI_API_KEY,
     });
 
     const index = await pineconeClient.index(indexName);
