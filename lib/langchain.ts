@@ -23,6 +23,32 @@ const model = new ChatGoogleGenerativeAI({
 
 export const indexName = "ai-chat-with-pdf";
 
+export async function fetchMessagesFromDB(docId:string){
+
+    const {userId} = await auth();
+    if(!userId){
+        throw new Error("Not authorized");
+    }
+    console.log(`fetching chat from firebase datastore...`);
+    const LIMIT = 6;
+
+    const chats = await adminDb
+        .collection(`users`)
+        .doc(userId)
+        .collection("files")
+        .doc(docId)
+        .collection("chat")
+        .orderBy("createdAt", "desc")
+        .get();
+
+    const chatHistory = chats.docs.map((doc) => {
+        doc.data().role === "human"
+        ? new HumanMessage(doc.data.message)
+                : new AIMessage(doc.data().message)
+    });
+
+}
+
 export async function generateDocs(docId: string){
     const {userId} = await auth();
     if(!userId){
@@ -121,8 +147,14 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
     }
 }
 
-const generateLangchainCompletion = async (docId:string ,question:string)=>{
+export const generateLangchainCompletion = async (docId:string , question:string)=>{
     let pineconeVectorStore;
     pineconeVectorStore = await generateEmbeddingsInPineconeVectorStore(docId);
+    if(!pineconeVectorStore) {
+        throw new Error("No pineconeVectorStore");
+    }
+    console.log(`creating a retriever...`);
+    const retriever = pineconeVectorStore.asRetriever();
+    const chatHistory = await fetchMessagesFromDB(docId);
 
 }
