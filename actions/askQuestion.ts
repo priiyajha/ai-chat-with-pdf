@@ -34,9 +34,17 @@ export async function askQuestion(id:string, question: string){
 
     const reply = await generateLangchainCompletion(id, question);
 
+    // const aiMessage: Message = {
+    //     role: "ai",
+    //     message: reply,
+    //     createdAt: new Date(),
+    // };
+    //
+    // await chatRef.add(aiMessage);
     const aiMessage: Message = {
         role: "ai",
         message: reply,
+        // Access the 'answer' property from the reply object
         createdAt: new Date(),
     };
 
