@@ -15,7 +15,7 @@ import { auth } from "@clerk/nextjs/server";
 
 
 const model = new ChatGoogleGenerativeAI({
-    model: "gemini-pro",
+    model: "gemini-1.5-flash",
     apiKey: process.env.GEMINI_API_KEY,
 });
 
@@ -41,11 +41,19 @@ export async function fetchMessagesFromDB(docId:string){
         .orderBy("createdAt", "desc")
         .get();
 
-    const chatHistory = chats.docs.map((doc) => {
+
+    const chatHistory = chats.docs.map((doc) =>
         doc.data().role === "human"
-        ? new HumanMessage(doc.data.message)
-                : new AIMessage(doc.data().message)
-    });
+            ? new HumanMessage(doc.data().message)
+            : new AIMessage(doc.data().message)
+    );
+
+    console.log(
+        `--- fetched last ${chatHistory.length} messages successfully ---`
+    );
+    console.log(chatHistory.map((msg) => msg.content.toString()));
+
+    return chatHistory;
 
 }
 
@@ -147,7 +155,7 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
     }
 }
 
-export const generateLangchainCompletion = async (docId:string , question:string)=>{
+const generateLangchainCompletion = async (docId:string , question:string)=>{
     let pineconeVectorStore;
     pineconeVectorStore = await generateEmbeddingsInPineconeVectorStore(docId);
     if(!pineconeVectorStore) {
@@ -157,4 +165,44 @@ export const generateLangchainCompletion = async (docId:string , question:string
     const retriever = pineconeVectorStore.asRetriever();
     const chatHistory = await fetchMessagesFromDB(docId);
 
-}
+    console.log(`define prompt template...`);
+    const historyAwarePrompt = ChatPromptTemplate.fromMessages([
+        ...chatHistory,
+        ["user", "{input}"],
+        [
+            "user",
+            "Given the above conversation, generate a search query to look up in order to get information relevant to the conversation",
+        ],
+    ]);
+    console.log("creating history aware retriever chain...");
+    const historyAwareRetrieverChain =await createHistoryAwareRetriever({
+        llm: model,
+        retriever,
+        rephrasePrompt: historyAwarePrompt,
+    });
+    console.log(`define prompt template for answering questions...`);
+    const historyAwareCombineDocsChain = ChatPromptTemplate.fromMessages([
+        [
+            "system",
+            "Answer the user's questions based on the below context :\n{context}",
+        ],
+        ...chatHistory,
+        ["user", "{input}"],
+    ]);
+    console.log('creating main retrieval chain...');
+    const conversationalRetrievalChain = await createRetrievalChain({
+        retriever: historyAwareRetrieverChain,
+        combineDocsChain: historyAwareCombineDocsChain,
+    });
+    console.log('running chain w a sample convo...');
+    const reply = await conversationalRetrievalChain.invoke({
+        chat_history: chatHistory,
+        input: question,
+    });
+
+    console.log(reply.answer);
+    return reply.answer;
+
+};
+
+export {model, generateLangchainCompletion};

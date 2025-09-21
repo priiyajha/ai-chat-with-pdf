@@ -5,15 +5,13 @@ import { FormEvent, useEffect, useRef, useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Loader2Icon } from "lucide-react";
-// import ChatMessage from "./ChatMessage";
+
 import { useCollection } from "react-firebase-hooks/firestore";
 import { useUser } from "@clerk/nextjs";
 import { collection, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase";
 import {askQuestion} from "@/actions/askQuestion";
-// import { askQuestion } from "@/actions/askQuestion";
-// import ChatMessage from "./ChatMessage";
-// import { useToast } from "./ui/use-toast";
+
 
 
 export type Message = {
@@ -43,7 +41,26 @@ function Chat({id}:{id:string}) {
         if(!snapshot) return;
         console.log("Updated Snapshot = ",snapshot.docs);
 
+        const lastMessage = message.pop();
+
+        if(lastMessage?.role ==="ai" && lastMessage.message === "thinking") {
+            return;
+        }
+
+        const newMessages = snapshot.docs.map((doc) => {
+            const {role, message, createdAt} = doc.data();
+            return{
+                id: doc.id,
+                role,
+                message,
+                createdAt: createdAt.toDate(),
+            };
+        })
+
+        setMessage(newMessages);
+
     }, [snapshot]);
+
 
     const handleSubmit = async function(e:FormEvent) {
         e.preventDefault();
@@ -82,14 +99,21 @@ function Chat({id}:{id:string}) {
     };
 
     return (
+
+
         <div className="flex flex-col h-full overflow-scroll">
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 w-full">
             {/*    contents of the chat...      */}
+                {message.map(message=>(
+                    <div key={message.id}>
+                        <p>{message.message}</p>
+                    </div>
+                ))}
             </div>
 
             <form
                 onSubmit={handleSubmit}
-                className="flex-shrink-0 flex items-center space-x-2 p-5 bg-indigo-600/75"
+                className="flex sticky bottom-0 space-x-2 p-5 bg-indigo-600/75"
             >
                 <Input
                     placeholder="Ask a question..."

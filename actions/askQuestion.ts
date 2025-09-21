@@ -32,14 +32,15 @@ export async function askQuestion(id:string, question: string){
 
     await chatRef.add(userMessage);
 
-    const reply = await generateLangchainCompletion(id,question);
+    const reply = await generateLangchainCompletion(id, question);
+
     const aiMessage: Message = {
-        role:"ai",
-        message:reply,
+        role: "ai",
+        message: reply,
         createdAt: new Date(),
-    }
+    };
+
     await chatRef.add(aiMessage);
 
-    return {success:true, message:null};
-
+    return { success: true, message: null };
 }
