@@ -70,20 +70,18 @@ async function ChatToFilePage({
     const url = ref.data()?.downloadUrl;
 
     return (
-        <div className="flex flex-row h-full overflow-hidden">
-
-            <div className="w-1/2 overflow-y-auto bg-gray-100 border-r-2 lg:border-indigo-600">
-                {/* PDFView */}
-                <PdfView url={url} />
-            </div>
+        <div className="grid lg:grid-cols-5 h-full overflow-hidden">
             {/* Right */}
-            <div className="  border-r-2 border-indigo-600 overflow-y-auto z-1">
+            <div className="col-span-5 lg:col-span-2 overflow-y-auto">
                 {/* Chat */}
                 <Chat id={id} />
             </div>
 
             {/* Left */}
-
+            <div className="col-span-5 lg:col-span-3 bg-gray-100 border-r-2 lg:border-indigo-600 lg:-order-1 overflow-auto">
+                {/* PDFView */}
+                <PdfView url={url} />
+            </div>
         </div>
     );
 }
