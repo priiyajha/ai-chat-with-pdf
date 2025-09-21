@@ -123,7 +123,7 @@ function Chat({id}:{id:string}) {
 
                 <Button type="submit" disabled={!input || isPending}>
                     {isPending ? (
-                        <Loader2Icon className="animate-spin text-indigo-600" />
+                        <Loader2Icon className="animate-spin text-white" />
                     ) : (
                         "Ask"
                     )}
