@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "echo $FIREBASE_KEY_BASE64 | base64 -d > service_key.json"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.32.0",
@@ -52,4 +53,5 @@
     "tw-animate-css": "^1.3.8",
     "typescript": "^5"
   }
+
 }
