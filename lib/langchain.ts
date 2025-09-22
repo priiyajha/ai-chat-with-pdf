@@ -180,6 +180,7 @@ const generateLangchainCompletion = async (docId: string, question: string) => {
     ]);
 
     console.log("--- Creating a history-aware retriever chain... ---");
+
     const historyAwareRetrieverChain = await createHistoryAwareRetriever({
         llm: model,
         retriever,

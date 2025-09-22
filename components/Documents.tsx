@@ -1,8 +1,10 @@
 import React from 'react'
 import PlaceholderDocument from "@/components/PlaceholderDocument";
-import {auth} from "@clerk/nextjs/server";
+
 import {adminDb} from "@/firebaseAdmin";
 import Document from '@/components/Document';
+import {auth} from "@clerk/nextjs/server";
+import {RedirectToSignIn} from "@clerk/nextjs";
 
 
 async function Documents () {
@@ -10,6 +12,7 @@ async function Documents () {
     const {userId} = await auth();
     if(!userId){
         throw new Error("User not found!");
+
     }
 
     const documentSnapshot = await adminDb
