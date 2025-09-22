@@ -1,3 +1,5 @@
+'use client';
+
 import {CheckIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
 
@@ -6,7 +8,7 @@ function PricingPage () {
     return (
         <div>
             <div className="py-24 sm:py-32">
-                <div className="mx-auto max-w-4xl text-center">
+                <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-base font-semibold leading-7 text-indigo-600">
                         Pricing
                     </h2>
@@ -20,9 +22,9 @@ function PricingPage () {
                     Enhance your productivity and save time by using this SaaS application.
                 </p>
 
-                <div className="max-w-md mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 md:max-w-2xl gap-8 g:max-w-4xl">
-                    <div className="ring-1 ring-indigo-200 p-8 h-fit pb-12 rounded-3xl">
-                        <h3 className="text-lg font-semibold leading-8 text-gray-900"> Starter Plan</h3>
+                <div className="max-w-md mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 md:max-w-2xl gap-8 lg:max-w-4xl">
+                    <div className="ring-1 ring-gray-200 p-8 h-fit pb-12 rounded-3xl">
+                        <h3 className="text-lg font-semibold leading-8 text-gray-900"> Starter Plan </h3>
                         <p className="mt-4 text-sm leading-6 text-gray-600">Explore core features FREE of COST!</p>
                         <p className="mt-6 flex items-baseline gap-x-1">
                             <span className="text-4xl font-bold tracking-tight text-gray-900">FREE</span>
@@ -33,7 +35,7 @@ function PricingPage () {
                         >
                             <li className="flex gap-x-3">
                                 <CheckIcon className="h-6 w-5 flex-none text-indigo-600" />
-                                Documents
+                                5 Documents
                             </li>
                             <li className="flex gap-x-3">
                                 <CheckIcon className="h-6 w-5 flex-none text-indigo-600" />
@@ -57,9 +59,7 @@ function PricingPage () {
                             <span className="text-sm font-semibold leading-6 text-gray-600">/month</span>
                         </p>
 
-                        <Button className="bg-indigo-600 text-white w-full shadow-sm hover:bg-indigo-500 mt-6
-                        block rounded-md px-3 py-2  text-center text-sm font-semibold leading-6 focus-visible:outline
-                        focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        <Button className="bg-indigo-600 w-full text-white shadow-sm hover:bg-indigo-500 mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                             Upgrade to PRO
                         </Button>
 
