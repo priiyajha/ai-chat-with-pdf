@@ -70,7 +70,7 @@ function Chat({id}:{id:string}) {
 
         setMessage(newMessages);
 
-    }, [snapshot, message]);
+    }, [snapshot]);
 
 
     const handleSubmit = async function(e:FormEvent) {
