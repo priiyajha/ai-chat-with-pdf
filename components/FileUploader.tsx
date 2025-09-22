@@ -38,9 +38,8 @@ const FileUploader = () => {
         }else{
 
         }
-    }, [])
+    }, [handleUpload])
 
-    // @ts-ignore
     const statusIcons:{
         [key in StatusText]:JSX.Element;
     } ={
@@ -66,34 +65,33 @@ const FileUploader = () => {
         }})
 
     const uploadInProgress = progress!= null && progress >= 0 && progress <= 100;
-
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
     return (
         <div className="mt-32 flex flex-col gap-4 items-center max-w-7xl mx-auto ">
 
             {uploadInProgress && (
-                <div className="flex flex-col items-center justify-center gap-5">
-                    <div className={`radial-progress bg-indigo-300 text-white border-indigo-600 border-4
-                    ${progress === 100 && "hidden"}`}
-                        role = "progressbar"
+                <div className="mt-32 flex flex-col justify-center items-center gap-5">
+                    <div
+                        className={`radial-progress bg-indigo-300 text-white border-indigo-600 border-4 ${
+                            progress === 100 && "hidden"
+                        }`}
+                        role="progressbar"
                         style={{
-                       "--value": progress,
-                        "--size": "12rem",
-                        "--thickness": "1.3rem",
-                    }}
+                            // @ts-ignore
+                            "--value": progress,
+                            "--size": "12rem",
+                            "--thickness": "1.3rem",
+                        }}
                     >
-                        {progress}%
+                        {progress} %
                     </div>
 
+                    {/* Render Status Icon */}
                     {
+                        // @ts-ignore
                         statusIcons[status!]
                     }
 
+                    {/* @ts-ignore */}
                     <p className="text-indigo-600 animate-pulse">{status}</p>
                 </div>
             )}
@@ -123,4 +121,5 @@ const FileUploader = () => {
     </div>
     )
 }
-export default FileUploader
+export default FileUploader;
+
