@@ -6,7 +6,12 @@ import {useUser} from "@clerk/nextjs";
 import {useRouter} from "next/navigation";
 import useSubscription from "@/hooks/usedSubscription";
 import {useTransition} from "react";
+import getStripe from "@/lib/stripe-js";
 
+export type UserDetails = {
+    email: string;
+    name: string;
+};
 
 function PricingPage () {
 
@@ -19,11 +24,24 @@ function PricingPage () {
     const handleUpgrade =  () => {
         if(!user) return;
 
-        const userDetails = {
-            email: user.primaryEmailAddress?.toString(),
-            name: user.fullName,
+        const userDetails: UserDetails = {
+            email: user.primaryEmailAddress?.toString()!,
+            name: user.fullName!,
         }
     }
+
+    startTransition(async () => {
+        const stripe = await getStripe();
+
+        if(hasActiveMembership){
+
+        }
+
+        const sessionId = await createCheckoutSession(userDetails);
+        await stripe?.redirectToCheckout({
+            sessionId,
+        });
+    })
 
     return (
         <div>
