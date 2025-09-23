@@ -2,9 +2,29 @@
 
 import {CheckIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {useUser} from "@clerk/nextjs";
+import {useRouter} from "next/navigation";
+import useSubscription from "@/hooks/usedSubscription";
+import {useTransition} from "react";
 
 
 function PricingPage () {
+
+    const {user} = useUser();
+    const router = useRouter();
+
+    const {hasActiveMembership, loading} = useSubscription();
+    const [isPending, startTransition] = useTransition();
+
+    const handleUpgrade =  () => {
+        if(!user) return;
+
+        const userDetails = {
+            email: user.primaryEmailAddress?.toString(),
+            name: user.fullName,
+        }
+    }
+
     return (
         <div>
             <div className="py-24 sm:py-32">
@@ -59,8 +79,16 @@ function PricingPage () {
                             <span className="text-sm font-semibold leading-6 text-gray-600">/month</span>
                         </p>
 
-                        <Button className="bg-indigo-600 w-full text-white shadow-sm hover:bg-indigo-500 mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                            Upgrade to PRO
+                        <Button className="bg-indigo-600 w-full text-white shadow-sm hover:bg-indigo-500 mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        disabled={loading||isPending}
+                        onClick={handleUpgrade}>
+                            {isPending||loading
+                                ?"Loading..."
+                                :hasActiveMembership
+                                ?"Manage Plan"
+                                    :"Upgrade to PRO"
+                            }
+
                         </Button>
 
                         <ul
