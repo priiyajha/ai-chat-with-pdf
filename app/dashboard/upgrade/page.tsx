@@ -8,6 +8,7 @@ import useSubscription from "@/hooks/usedSubscription";
 import {useTransition} from "react";
 import getStripe from "@/lib/stripe-js";
 import {createCheckoutSession} from "@/actions/createCheckoutSession";
+import {createStripePortal} from "@/actions/createStripePortal";
 
 export type UserDetails = {
     email: string;
@@ -35,6 +36,8 @@ function PricingPage () {
         const stripe = await getStripe();
 
         if (hasActiveMembership) {
+            const stripePortalUrl = await createStripePortal();
+            return router.push(stripePortalUrl);
 
         }
 
