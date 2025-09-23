@@ -7,6 +7,7 @@ import {useRouter} from "next/navigation";
 import useSubscription from "@/hooks/usedSubscription";
 import {useTransition} from "react";
 import getStripe from "@/lib/stripe-js";
+import {createCheckoutSession} from "@/actions/createCheckoutSession";
 
 export type UserDetails = {
     email: string;
@@ -21,19 +22,19 @@ function PricingPage () {
     const {hasActiveMembership, loading} = useSubscription();
     const [isPending, startTransition] = useTransition();
 
-    const handleUpgrade =  () => {
-        if(!user) return;
+    const handleUpgrade = () => {
+        if (!user) return;
 
         const userDetails: UserDetails = {
             email: user.primaryEmailAddress?.toString()!,
             name: user.fullName!,
-        }
-    }
+        };
+
 
     startTransition(async () => {
         const stripe = await getStripe();
 
-        if(hasActiveMembership){
+        if (hasActiveMembership) {
 
         }
 
@@ -41,7 +42,8 @@ function PricingPage () {
         await stripe?.redirectToCheckout({
             sessionId,
         });
-    })
+    });
+};
 
     return (
         <div>
@@ -142,7 +144,6 @@ function PricingPage () {
         </div>
 
     );
+
 }
-
-
 export default PricingPage;
