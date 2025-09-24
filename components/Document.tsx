@@ -42,7 +42,7 @@ function Document({
             <div className="flex space-x-2 justify-end">
                 <Button
                     variant="outline"
-                    disabled={isDeleting || !hasActiveMembership}
+                    disabled={isDeleting}
                     onClick={() => {
                         const prompt = window.confirm(
                             "Are you sure you want to delete this document?"
@@ -57,9 +57,8 @@ function Document({
                     }}
                 >
                     <Trash2Icon className="h-6 w-6 text-red-500" />
-                    {!hasActiveMembership && (
-                        <span className="text-red-500 ml-2">PRO Feature</span>
-                    )}
+
+                        <span className="text-red-500 ml-2">Delete</span>
                 </Button>
 
                 <Button variant="outline" asChild>

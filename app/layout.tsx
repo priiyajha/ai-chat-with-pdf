@@ -1,22 +1,3 @@
-// import "./globals.css";
-// import {ClerkProvider} from "@clerk/nextjs";
-//
-//
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   return (
-//       <ClerkProvider>
-//     <html lang="en">
-//     <body className="overflow-scroll p-2 lg:p-5 min-h-screen h-screen flex flex-col">{children}</body>
-//     </html>
-//       </ClerkProvider>
-//
-//   );
-// }
-// //
 import { type Metadata } from 'next'
 import {
   ClerkProvider,
@@ -72,23 +53,3 @@ export default function RootLayout({
       </ClerkProvider>
   )
 }
-
-//
-// import {ClerkProvider, SignInButton} from '@clerk/nextjs'
-// import './globals.css'
-//
-// export default function RootLayout({
-//                                      children,
-//                                    }: Readonly<{
-//   children: React.ReactNode
-// }>) {
-//   return (
-//       <ClerkProvider>
-//         <html lang="en">
-//         <body>
-//         {children}
-//         </body>
-//         </html>
-//       </ClerkProvider>
-//   )
-// }
