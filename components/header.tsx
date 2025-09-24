@@ -3,6 +3,8 @@ import Link from "next/link";
 import {SignedIn, UserButton} from '@clerk/nextjs';
 import {Button} from "@/components/ui/button";
 import {FilePlus2} from "lucide-react";
+import UpgradeButton from "@/components/UpgradeButton";
+
 
 const Header = () => {
     return <div className="flex justify-between bg-gray-200 shadow-sm p-5 border-b">
@@ -25,6 +27,7 @@ const Header = () => {
                         <FilePlus2 className="text-indigo-600" />
                     </Link>
                 </Button>
+                <UpgradeButton/>
 
                 <UserButton/>
             </div>
