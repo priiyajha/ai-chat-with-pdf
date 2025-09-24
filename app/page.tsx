@@ -48,8 +48,7 @@ export default function Home() {
 
 
 
-    let redirectUrl = "https://quick-satyr-41.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard";
-    return (
+     return (
       <main className="flex-1 overflow-scroll p-2 lg:p-5 bg-gradient-to-bl from-white to accent-indigo-600">
         <div className="bg-white py-24 sm:py-32 rounded-md drop-shadow-xl">
             <div className="flex flex-col justify-center items-center mx-auto max-w-7xl px-6 lg:px-8">

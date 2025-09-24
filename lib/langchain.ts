@@ -8,7 +8,7 @@ import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retr
 import { HumanMessage, AIMessage } from "@langchain/core/messages";
 import pineconeClient from "./pinecone";
 import { PineconeStore } from "@langchain/pinecone";
-import { PineconeConflictError } from "@pinecone-database/pinecone/dist/errors";
+
 import { Index, RecordMetadata } from "@pinecone-database/pinecone";
 import { adminDb } from "@/firebaseAdmin";
 import { auth } from "@clerk/nextjs/server";

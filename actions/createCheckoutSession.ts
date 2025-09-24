@@ -5,7 +5,6 @@ import {UserDetails} from "@/app/dashboard/upgrade/page";
 import {auth} from "@clerk/nextjs/server";
 import {adminDb} from "@/firebaseAdmin";
 import stripe from "@/lib/stripe";
-import {subscription} from "swr/subscription";
 import getBaseUrl from "@/lib/getBaseUrl";
 
 

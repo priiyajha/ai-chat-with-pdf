@@ -11,8 +11,6 @@ import { useUser } from "@clerk/nextjs";
 import { collection, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase";
 import {askQuestion} from "@/actions/askQuestion";
-import {placeholder} from "google-logging-utils";
-import {scrollIntoView} from "pdfjs-dist/types/web/ui_utils";
 import ChatMessage from "@/components/ChatMessage";
 
 

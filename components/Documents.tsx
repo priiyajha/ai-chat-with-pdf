@@ -4,7 +4,7 @@ import PlaceholderDocument from "@/components/PlaceholderDocument";
 import {adminDb} from "@/firebaseAdmin";
 import Document from '@/components/Document';
 import {auth} from "@clerk/nextjs/server";
-import {RedirectToSignIn} from "@clerk/nextjs";
+
 
 
 async function Documents () {
