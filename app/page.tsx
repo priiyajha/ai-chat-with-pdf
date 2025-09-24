@@ -1,3 +1,4 @@
+'use client';
 import{
     BrainCogIcon,
     EyeIcon,
@@ -9,7 +10,6 @@ import{
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import Image from 'next/image';
-import {SignInButton} from "@clerk/nextjs";
 
 const features = [
     {
@@ -45,7 +45,11 @@ const features = [
 ]
 
 export default function Home() {
-  return (
+
+
+
+    let redirectUrl = "https://quick-satyr-41.accounts.dev/sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard";
+    return (
       <main className="flex-1 overflow-scroll p-2 lg:p-5 bg-gradient-to-bl from-white to accent-indigo-600">
         <div className="bg-white py-24 sm:py-32 rounded-md drop-shadow-xl">
             <div className="flex flex-col justify-center items-center mx-auto max-w-7xl px-6 lg:px-8">
@@ -68,6 +72,9 @@ export default function Home() {
                 <Button asChild className="mt-10">
                     <Link href="/dashboard">Get Started</Link>
                 </Button>
+
+
+
             </div>
             <div className="relative overflow-hidden pt-16">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
